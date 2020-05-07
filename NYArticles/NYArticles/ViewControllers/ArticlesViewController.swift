@@ -10,17 +10,19 @@ import UIKit
 
 class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var header: UINavigationItem!
     @IBOutlet weak var articlesTabBar: UITabBar!
     @IBOutlet weak var articlesTable: UITableView!
     
     private var articlesPresenter: ArticlesPresenter?
-    private var articles: [Article] = []
+    private var articles: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         articlesTabBar.selectedItem = articlesTabBar.items?.first
         articlesPresenter = ArticlesPresenter(viewController: self)
+        self.startSpinner()
     }
 
     public func setPresenter(_ presenter: ArticlesPresenter) {
@@ -31,12 +33,30 @@ class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableVie
         header.title = newHeader
     }
     
-    public func setArticles(_ newArticles: [Article]) {
+    public func setArticles(_ newArticles: [String]) {
         articles = newArticles
+        self.stopSpinner()
+        articlesTable.reloadData()
+    }
+    
+    private func stopSpinner() {
+        spinner.stopAnimating()
+        spinner.isHidden = true
+    }
+    
+    private func startSpinner() {
+        spinner.startAnimating()
+        spinner.isHidden = false
+    }
+    
+    private func clearTable() {
+        articles = []
         articlesTable.reloadData()
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        self.clearTable()
+        self.startSpinner()
         guard let articlesBarItem = ArticlesBarItem(rawValue: item.title ?? "") else {return}
         articlesPresenter?.changeBarItem(articlesBarItem)
     }
@@ -44,75 +64,38 @@ class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableVie
     // MARK: - Table view data source
 
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return articles.count
     }
 
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "articlesCell", for: indexPath) as! ArticlesTableViewCell
 
-        cell.title.text = articles[indexPath.row].title
-        // Configure the cell...
-
+        cell.title.text = articles[indexPath.row]
         return cell
     }
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-//        if let viewController = storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController {
-//            viewController.articleTitle.text = "selectedTrail"
-//            self.navigationController?.pushViewController(viewController, animated: true)
-//        }
-        
-        articlesPresenter?.didSelectArticle()
+        articlesPresenter?.didSelectArticle(indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+    
+     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let editAction = UITableViewRowAction(style: .default, title: "Favorites", handler: { (action, indexPath) in
+            self.articlesPresenter?.saveArticleToFavorites(indexArticle: indexPath.row)
+        })
+        editAction.backgroundColor = .magenta
+        
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
+            self.articles.remove(at: indexPath.row)
+            tableView.reloadData()
+        })
+        return [deleteAction, editAction]
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 enum ArticlesBarItem: String {
@@ -125,7 +108,7 @@ enum ArticlesBarItem: String {
 struct Article {
     public var title: String
     public var author: String
-//    public var image: UIImage
+    public var image: UIImage
     public var section: String
     public var abstract: String
     public var date: String

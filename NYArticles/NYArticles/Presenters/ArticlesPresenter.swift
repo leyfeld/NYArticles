@@ -12,29 +12,54 @@ import UIKit
 class ArticlesPresenter {
     
     private weak var articlesViewController: ArticlesViewController?
+    private var articles: [Article] = []
+    private var favoritesArticles: [Article] = []
+    private let service = ServiceAPIManager()
     
     init(viewController: ArticlesViewController?) {
         articlesViewController = viewController
-        let service = ServiceAPIManager()
-        service.getMostSharedArticles(onComplete: {dictionary, error in
-            
-            self.articlesViewController?.setArticles(dictionary!)
-            
-        })
+        self.getArticles(type: ArticlesBarItem.viewed)
     }
     
     public func changeBarItem(_ newItem: ArticlesBarItem) {
         self.changeHeader(newHeader: newItem.rawValue)
+        self.getArticles(type: newItem)
     }
     
     public func changeHeader(newHeader: String) {
         articlesViewController?.setHeader(newHeader)
     }
     
-    public func didSelectArticle() {
+    public func didSelectArticle(_ indexArticle: Int) {
+        let selectedArticle = articles[indexArticle]
+        let details = [selectedArticle.author, selectedArticle.section, selectedArticle.abstract, selectedArticle.date, selectedArticle.url]
         if let viewController = articlesViewController?.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController {
-            viewController.text = "selectedTrail"
+            viewController.newImage = selectedArticle.image
+            viewController.text = selectedArticle.title
+            viewController.articleDetails = details
             articlesViewController?.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    public func saveArticleToFavorites(indexArticle: Int) {
+        print(articles[indexArticle].title)
+    }
+    
+    private func getArticles(type: ArticlesBarItem){
+        DispatchQueue.global().async {
+            self.service.getArticles(type: type, onComplete: { newArticles, error in
+                if let unwrappedArticles = newArticles{
+                    self.articles = unwrappedArticles
+                    self.setArticlesForTable()
+                }
+            })
+        }
+    }
+    
+    private func setArticlesForTable() {
+        let titles = articles.map{$0.title}
+        DispatchQueue.main.async {
+            self.articlesViewController?.setArticles(titles)
         }
     }
 }

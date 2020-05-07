@@ -12,6 +12,7 @@ class DetailsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var type: UILabel!
     @IBOutlet weak var value: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

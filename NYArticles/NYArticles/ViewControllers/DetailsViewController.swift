@@ -12,17 +12,20 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
 
     @IBOutlet weak var articleTitle: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     
     public var text: String = ""
+    public var newImage: UIImage?
+    public var articleDetails: [String] = []
     private var detailsPresenter: DetailsPresenter?
     private let detailsType: [String] = ["Author", "Section", "Abstract", "Date", "Url"]
-    private var articleDetails: [String] = ["By Sanya Dosani and Adam Westbrook","Opinion","A look at the style of Dr. Amy Acton, who has earned praise for her daily briefings on the pandemic.", "2020-05-05", "https://www.nytimes.com/2020/05/05/opinion/coronavirus-ohio-amy-acton.html"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.detailsPresenter = DetailsPresenter(viewController: self)
         // Do any additional setup after loading the view.
         articleTitle.text = text
+        imageView.image = newImage
     }
     
     
