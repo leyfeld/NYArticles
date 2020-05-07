@@ -16,19 +16,24 @@ class ServiceAPIManager {
         httpClient = HttpClient()
     }
     
-    public func getMostViewedArticles(onComplete: @escaping (Dictionary<String, Any>?, Error?) -> Void) {
-        httpClient.request(url: "https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=VukXlpqJIrfhow6RpdAVbWIrHdkLHTyB", onComplete: {response, error in onComplete(response,error)})
-    }
-    
-    public func getMostSharedArticles(onComplete: @escaping ([Article]?, Error?) -> Void) {
-        httpClient.request(url: "https://api.nytimes.com/svc/mostpopular/v2/shared/30.json?api-key=VukXlpqJIrfhow6RpdAVbWIrHdkLHTyB", onComplete: {response, error in
-            let articles = ResponseParser.getArticles(response: response ?? ["":""])
+    public func getArticles(type:ArticlesBarItem, onComplete: @escaping ([Article]?, Error?) -> Void){
+        let url: String
+        switch type {
+        case .viewed:
+            url = "https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=VukXlpqJIrfhow6RpdAVbWIrHdkLHTyB"
+        case .emailed:
+            url = "https://api.nytimes.com/svc/mostpopular/v2/emailed/30.json?api-key=VukXlpqJIrfhow6RpdAVbWIrHdkLHTyB"
+        case .shared:
+             url = "https://api.nytimes.com/svc/mostpopular/v2/shared/30.json?api-key=VukXlpqJIrfhow6RpdAVbWIrHdkLHTyB"
+        default:
+            return
+        }
+        httpClient.request(url: url, onComplete: {response, error in
+            guard let articles = ResponseParser.getArticles(response: response ?? ["":""]) else {
+                onComplete(nil, error)
+                return
+            }
             onComplete(articles,error)
-            
         })
-    }
-    
-    public func getMostEmailedArticles(onComplete: @escaping (Dictionary<String, Any>?, Error?) -> Void) {
-        httpClient.request(url: "https://api.nytimes.com/svc/mostpopular/v2/emailed/30.json?api-key=VukXlpqJIrfhow6RpdAVbWIrHdkLHTyB", onComplete: {response, error in onComplete(response,error)})
     }
 }

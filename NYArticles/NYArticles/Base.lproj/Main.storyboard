@@ -100,6 +100,7 @@
                     <navigationItem key="navigationItem" id="awz-d5-fhP"/>
                     <connections>
                         <outlet property="articleTitle" destination="64n-zf-Xsh" id="gqh-h0-EC0"/>
+                        <outlet property="imageView" destination="sNg-dl-3Je" id="A1l-3E-NVj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -131,7 +132,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5G-JN-JtI">
-                                <rect key="frame" x="0.0" y="779" width="414" height="83"/>
+                                <rect key="frame" x="0.0" y="793" width="414" height="69"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <tabBarItem title="Most Viewed" image="list.dash" catalog="system" id="UQ6-hO-7g6"/>
@@ -144,8 +145,8 @@
                                 </connections>
                             </tabBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yzZ-UO-on5">
-                                <rect key="frame" x="0.0" y="103" width="414" height="676"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="103" width="414" height="690"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="articlesCell" textLabel="8Sx-S7-UZS" style="IBUITableViewCellStyleDefault" id="epp-zf-DDX" customClass="ArticlesTableViewCell" customModule="NYArticles" customModuleProvider="target">
                                         <rect key="frame" x="20" y="55.5" width="374" height="43.5"/>
@@ -173,6 +174,11 @@
                                     <outlet property="delegate" destination="8o3-4n-DQ3" id="LzE-cD-im0"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" id="LF6-6l-CHl">
+                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -182,6 +188,8 @@
                             <constraint firstItem="m5G-JN-JtI" firstAttribute="top" secondItem="yzZ-UO-on5" secondAttribute="bottom" id="aEr-oY-ilM"/>
                             <constraint firstItem="yzZ-UO-on5" firstAttribute="top" secondItem="xSu-IM-18w" secondAttribute="top" constant="15" id="fPH-qi-6u6"/>
                             <constraint firstItem="yzZ-UO-on5" firstAttribute="leading" secondItem="xSu-IM-18w" secondAttribute="leading" id="mIH-m8-HfP"/>
+                            <constraint firstItem="LF6-6l-CHl" firstAttribute="centerY" secondItem="yzZ-UO-on5" secondAttribute="centerY" id="myh-wJ-S9K"/>
+                            <constraint firstItem="LF6-6l-CHl" firstAttribute="centerX" secondItem="yzZ-UO-on5" secondAttribute="centerX" id="z0R-C2-eP5"/>
                             <constraint firstAttribute="trailing" secondItem="m5G-JN-JtI" secondAttribute="trailing" id="z97-vj-hcB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xSu-IM-18w"/>
@@ -192,6 +200,7 @@
                         <outlet property="articlesTabBar" destination="m5G-JN-JtI" id="3zV-vd-HjN"/>
                         <outlet property="articlesTable" destination="yzZ-UO-on5" id="mZL-3y-Cce"/>
                         <outlet property="header" destination="Pyh-wb-mg6" id="QPr-JD-HpZ"/>
+                        <outlet property="spinner" destination="LF6-6l-CHl" id="V4y-EY-TDX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZtM-iK-nRS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
