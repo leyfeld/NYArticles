@@ -23,6 +23,7 @@
 		FF2B528F246412A6004628AA /* ServiceAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B528E246412A6004628AA /* ServiceAPIManager.swift */; };
 		FF2B5291246412C5004628AA /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B5290246412C5004628AA /* HttpClient.swift */; };
 		FF2B52932464212E004628AA /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B52922464212E004628AA /* ResponseParser.swift */; };
+		FF2B529724648BE0004628AA /* ArticleDataKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B529624648BE0004628AA /* ArticleDataKeeper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		FF2B528E246412A6004628AA /* ServiceAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPIManager.swift; sourceTree = "<group>"; };
 		FF2B5290246412C5004628AA /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 		FF2B52922464212E004628AA /* ResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
+		FF2B529624648BE0004628AA /* ArticleDataKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataKeeper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				FF2B52632462C0E7004628AA /* AppDelegate.swift */,
+				FF2B529624648BE0004628AA /* ArticleDataKeeper.swift */,
 				FF2B52652462C0E7004628AA /* SceneDelegate.swift */,
 				FF2B528E246412A6004628AA /* ServiceAPIManager.swift */,
 				FF2B5290246412C5004628AA /* HttpClient.swift */,
@@ -261,6 +264,7 @@
 				FF2B528F246412A6004628AA /* ServiceAPIManager.swift in Sources */,
 				FF2B528924632BA8004628AA /* DetailsPresenter.swift in Sources */,
 				FF2B52932464212E004628AA /* ResponseParser.swift in Sources */,
+				FF2B529724648BE0004628AA /* ArticleDataKeeper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -85,16 +85,22 @@ class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableVie
     }
 
      func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        if articlesTabBar.selectedItem == articlesTabBar.items?.last {
+            let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
+                self.articles.remove(at: indexPath.row)
+                tableView.reloadData()
+                self.articlesPresenter?.removeFavoriteArticle(indexArticle: indexPath.row)
+            })
+            return [deleteAction]
+        }
+        
         let editAction = UITableViewRowAction(style: .default, title: "Favorites", handler: { (action, indexPath) in
             self.articlesPresenter?.saveArticleToFavorites(indexArticle: indexPath.row)
         })
         editAction.backgroundColor = .magenta
         
-        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
-            self.articles.remove(at: indexPath.row)
-            tableView.reloadData()
-        })
-        return [deleteAction, editAction]
+        
+        return [editAction]
     }
 }
 
@@ -105,12 +111,12 @@ enum ArticlesBarItem: String {
     case favorites = "Favorites"
 }
 
-struct Article {
-    public var title: String
-    public var author: String
-    public var image: UIImage
-    public var section: String
-    public var abstract: String
-    public var date: String
-    public var url: String
+struct Article : Codable {
+     var title: String
+     var author: String
+     var imageUrl: String
+     var section: String
+     var abstract: String
+     var date: String
+     var url: String
 }

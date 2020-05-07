@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class ArticlesPresenter {
     
@@ -18,12 +19,18 @@ class ArticlesPresenter {
     
     init(viewController: ArticlesViewController?) {
         articlesViewController = viewController
-        self.getArticles(type: ArticlesBarItem.viewed)
+        getArticles(type: ArticlesBarItem.viewed)
     }
     
     public func changeBarItem(_ newItem: ArticlesBarItem) {
         self.changeHeader(newHeader: newItem.rawValue)
-        self.getArticles(type: newItem)
+        if newItem == ArticlesBarItem.favorites {
+            articles = ArticleDataKeeper().getArticlesFromCoreData()
+            self.setArticlesForTable()
+        }
+        else {
+            self.getArticles(type: newItem)
+        }
     }
     
     public func changeHeader(newHeader: String) {
@@ -34,7 +41,13 @@ class ArticlesPresenter {
         let selectedArticle = articles[indexArticle]
         let details = [selectedArticle.author, selectedArticle.section, selectedArticle.abstract, selectedArticle.date, selectedArticle.url]
         if let viewController = articlesViewController?.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController {
-            viewController.newImage = selectedArticle.image
+            var image: UIImage? = #imageLiteral(resourceName: "article")
+            if let imageUrl = URL(string: selectedArticle.imageUrl) {
+                if let data = try? Data(contentsOf: imageUrl) {
+                    image = UIImage(data: data)
+                }
+            }
+            viewController.newImage = image
             viewController.text = selectedArticle.title
             viewController.articleDetails = details
             articlesViewController?.navigationController?.pushViewController(viewController, animated: true)
@@ -42,7 +55,12 @@ class ArticlesPresenter {
     }
     
     public func saveArticleToFavorites(indexArticle: Int) {
-        print(articles[indexArticle].title)
+        let selectedArticle = articles[indexArticle]
+        ArticleDataKeeper().saveArticleToCoreData(article: selectedArticle)
+    }
+    
+    public func removeFavoriteArticle(indexArticle: Int) {
+        ArticleDataKeeper().removeArticle(indexArticle: indexArticle)
     }
     
     private func getArticles(type: ArticlesBarItem){

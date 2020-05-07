@@ -21,8 +21,8 @@ class ResponseParser {
             guard let section = newArticle["section"] as? String else { continue }
             guard let date = newArticle["published_date"] as? String else { continue }
             guard let url = newArticle["url"] as? String else { continue }
-            guard let image = getImage(newArticle) else { continue }
-            let article = Article(title: title, author: author, image: image, section: section, abstract: abstract, date: date, url: url)
+            let strImage = getImageString(newArticle)
+            let article = Article(title: title, author: author, imageUrl: strImage, section: section, abstract: abstract, date: date, url: url)
             print(article)
             articles.append(article)
         }
@@ -30,18 +30,19 @@ class ResponseParser {
         return articles
     }
     
-    class private func getImage(_ newArticle: [String:Any]) -> UIImage? {
-        guard let media = newArticle["media"] as? [[String:Any]] else { return #imageLiteral(resourceName: "article") }
+    class private func getImageString(_ newArticle: [String: Any]) -> String {
+        guard let media = newArticle["media"] as? [[String: Any]] else { return "" }
         if media.count == 0{
-            return #imageLiteral(resourceName: "article")
+            return ""
         }
-        guard let metadata = media[0]["media-metadata"] as? [[String:Any]] else { return #imageLiteral(resourceName: "article") }
-        guard let url = metadata[2]["url"] as? String else { return #imageLiteral(resourceName: "article") }
-        if let imageUrl = URL(string: url) {
-            if let data = try? Data(contentsOf: imageUrl) {
-                return UIImage(data: data)
+        guard let metadata = media[0]["media-metadata"] as? [[String: Any]] else { return "" }
+        guard let maxObject = metadata.max(by: { (a, b) -> Bool in
+            if let widthA = a["width"] as? Int, let widthB = b["width"] as? Int {
+                return widthA < widthB
             }
-        }
-        return #imageLiteral(resourceName: "article")
+            return false
+        }) else {return ""}
+        guard let strUrl = maxObject["url"] as? String else { return "" }
+        return strUrl
     }
 }
