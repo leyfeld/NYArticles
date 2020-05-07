@@ -7,19 +7,27 @@
 //
 
 import Foundation
+import UIKit
 
 class ArticlesPresenter {
-    private var articlesViewController: ArticlesViewController?
+    private weak var articlesViewController: ArticlesViewController?
     
     init(viewController: ArticlesViewController?) {
         articlesViewController = viewController
     }
     
-    func changeBarItem(_ newItem: ArticlesBarItem) {
+    public func changeBarItem(_ newItem: ArticlesBarItem) {
         self.changeHeader(newHeader: newItem.rawValue)
     }
     
-    func changeHeader(newHeader: String) {
+    public func changeHeader(newHeader: String) {
         articlesViewController?.setHeader(newHeader)
+    }
+    
+    public func didSelectArticle() {
+        if let viewController = articlesViewController?.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController {
+            viewController.text = "selectedTrail"
+            articlesViewController?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
 }

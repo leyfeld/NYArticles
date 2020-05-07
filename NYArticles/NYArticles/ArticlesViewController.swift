@@ -10,16 +10,18 @@ import UIKit
 
 class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
     
+
+    @IBOutlet weak var header: UINavigationItem!
     @IBOutlet weak var articlesTabBar: UITabBar!
-    @IBOutlet weak var header: UILabel!
     @IBOutlet weak var articlesTable: UITableView!
     
-    private weak var articlesPresenter: ArticlesPresenter?
-    private var articles: [String] = ["d", "dddd", "ddddd"]
+    private var articlesPresenter: ArticlesPresenter?
+    private var articles: [String] = ["She Predicted the Coronavirus. What Does She Foresee Next?", "dddd", "ddddd"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         articlesTabBar.selectedItem = articlesTabBar.items?.first
+        articlesPresenter = ArticlesPresenter(viewController: self)
     }
 
     public func setPresenter(_ presenter: ArticlesPresenter) {
@@ -27,7 +29,7 @@ class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableVie
     }
     
     public func setHeader(_ newHeader: String) {
-        header.text = newHeader
+        header.title = newHeader
     }
     
     public func setArticles(_ newArticles: [String]) {
@@ -56,6 +58,16 @@ class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableVie
         return cell
     }
    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+//        if let viewController = storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController {
+//            viewController.articleTitle.text = "selectedTrail"
+//            self.navigationController?.pushViewController(viewController, animated: true)
+//        }
+        
+        articlesPresenter?.didSelectArticle()
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.
