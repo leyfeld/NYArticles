@@ -10,10 +10,17 @@ import Foundation
 import UIKit
 
 class ArticlesPresenter {
+    
     private weak var articlesViewController: ArticlesViewController?
     
     init(viewController: ArticlesViewController?) {
         articlesViewController = viewController
+        let service = ServiceAPIManager()
+        service.getMostSharedArticles(onComplete: {dictionary, error in
+            
+            self.articlesViewController?.setArticles(dictionary!)
+            
+        })
     }
     
     public func changeBarItem(_ newItem: ArticlesBarItem) {

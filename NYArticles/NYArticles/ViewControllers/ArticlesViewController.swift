@@ -10,13 +10,12 @@ import UIKit
 
 class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
     
-
     @IBOutlet weak var header: UINavigationItem!
     @IBOutlet weak var articlesTabBar: UITabBar!
     @IBOutlet weak var articlesTable: UITableView!
     
     private var articlesPresenter: ArticlesPresenter?
-    private var articles: [String] = ["She Predicted the Coronavirus. What Does She Foresee Next?", "dddd", "ddddd"]
+    private var articles: [Article] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +31,7 @@ class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableVie
         header.title = newHeader
     }
     
-    public func setArticles(_ newArticles: [String]) {
+    public func setArticles(_ newArticles: [Article]) {
         articles = newArticles
         articlesTable.reloadData()
     }
@@ -52,7 +51,7 @@ class ArticlesViewController: UIViewController,  UITableViewDelegate, UITableVie
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "articlesCell", for: indexPath) as! ArticlesTableViewCell
 
-        cell.title.text = articles[indexPath.row]
+        cell.title.text = articles[indexPath.row].title
         // Configure the cell...
 
         return cell
@@ -121,4 +120,14 @@ enum ArticlesBarItem: String {
     case shared = "Most Shared"
     case emailed = "Most Emailed"
     case favorites = "Favorites"
+}
+
+struct Article {
+    public var title: String
+    public var author: String
+//    public var image: UIImage
+    public var section: String
+    public var abstract: String
+    public var date: String
+    public var url: String
 }
