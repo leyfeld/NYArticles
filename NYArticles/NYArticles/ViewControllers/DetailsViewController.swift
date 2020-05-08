@@ -12,13 +12,15 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
 
     @IBOutlet weak var articleTitle: UILabel!
+    @IBOutlet weak var url: UITextView!
     @IBOutlet weak var imageView: UIImageView!
     
     public var text: String = ""
+    public var articleUrl: String = ""
     public var newImage: UIImage?
     public var articleDetails: [String] = []
     private var detailsPresenter: DetailsPresenter?
-    private let detailsType: [String] = ["Author", "Section", "Abstract", "Date", "Url"]
+    private let detailsType: [String] = ["Author", "Section", "Abstract", "Date"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,6 +28,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Do any additional setup after loading the view.
         articleTitle.text = text
         imageView.image = newImage
+        url.text = articleUrl
     }
     
     

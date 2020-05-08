@@ -23,7 +23,6 @@ class ResponseParser {
             guard let url = newArticle["url"] as? String else { continue }
             let strImage = getImageString(newArticle)
             let article = Article(title: title, author: author, imageUrl: strImage, section: section, abstract: abstract, date: date, url: url)
-            print(article)
             articles.append(article)
         }
         print(results)

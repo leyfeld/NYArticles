@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import CoreData
 
 class ArticlesPresenter {
     
@@ -39,7 +38,7 @@ class ArticlesPresenter {
     
     public func didSelectArticle(_ indexArticle: Int) {
         let selectedArticle = articles[indexArticle]
-        let details = [selectedArticle.author, selectedArticle.section, selectedArticle.abstract, selectedArticle.date, selectedArticle.url]
+        let details = [selectedArticle.author, selectedArticle.section, selectedArticle.abstract, selectedArticle.date]
         if let viewController = articlesViewController?.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController {
             var image: UIImage? = #imageLiteral(resourceName: "article")
             if let imageUrl = URL(string: selectedArticle.imageUrl) {
@@ -49,6 +48,7 @@ class ArticlesPresenter {
             }
             viewController.newImage = image
             viewController.text = selectedArticle.title
+            viewController.articleUrl = selectedArticle.url
             viewController.articleDetails = details
             articlesViewController?.navigationController?.pushViewController(viewController, animated: true)
         }
@@ -66,7 +66,7 @@ class ArticlesPresenter {
     private func getArticles(type: ArticlesBarItem){
         DispatchQueue.global().async {
             self.service.getArticles(type: type, onComplete: { newArticles, error in
-                if let unwrappedArticles = newArticles{
+                if let unwrappedArticles = newArticles {
                     self.articles = unwrappedArticles
                     self.setArticlesForTable()
                 }
