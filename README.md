@@ -6,7 +6,7 @@ This application shows how to use UITableView and TabBars. It uses public API ht
 ### Support
 
 - Xcode 11.4
-- ios 13
+- iOS 13
 
 
 ### Screenshots 
