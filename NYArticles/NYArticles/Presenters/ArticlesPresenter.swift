@@ -39,7 +39,7 @@ class ArticlesPresenter {
     public func didSelectArticle(_ indexArticle: Int) {
         let selectedArticle = articles[indexArticle]
         let details = [selectedArticle.author, selectedArticle.section, selectedArticle.abstract, selectedArticle.date]
-        if let viewController = articlesViewController?.storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController {
+        if let viewController = articlesViewController?.storyboard?.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController {
             var image: UIImage? = #imageLiteral(resourceName: "article")
             if let imageUrl = URL(string: selectedArticle.imageUrl) {
                 if let data = try? Data(contentsOf: imageUrl) {
