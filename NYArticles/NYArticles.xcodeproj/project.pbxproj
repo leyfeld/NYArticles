@@ -24,6 +24,7 @@
 		FF2B5291246412C5004628AA /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B5290246412C5004628AA /* HttpClient.swift */; };
 		FF2B52932464212E004628AA /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B52922464212E004628AA /* ResponseParser.swift */; };
 		FF2B529724648BE0004628AA /* ArticleDataKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B529624648BE0004628AA /* ArticleDataKeeper.swift */; };
+		FF2B529A24656B1F004628AA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B529924656B1F004628AA /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		FF2B5290246412C5004628AA /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 		FF2B52922464212E004628AA /* ResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
 		FF2B529624648BE0004628AA /* ArticleDataKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataKeeper.swift; sourceTree = "<group>"; };
+		FF2B529924656B1F004628AA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			children = (
 				FF2B52822462D5D8004628AA /* ArticlesPresenter.swift */,
 				FF2B528824632BA8004628AA /* DetailsPresenter.swift */,
+				FF2B529924656B1F004628AA /* Utils.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				FF2B527D2462CE1D004628AA /* ArticlesViewController.swift in Sources */,
 				FF2B52832462D5D8004628AA /* ArticlesPresenter.swift in Sources */,
 				FF2B526E2462C0E7004628AA /* NYArticles.xcdatamodeld in Sources */,
+				FF2B529A24656B1F004628AA /* Utils.swift in Sources */,
 				FF2B528B246406D4004628AA /* DetailsTableViewCell.swift in Sources */,
 				FF2B5287246325FB004628AA /* DetailsViewController.swift in Sources */,
 				FF2B52642462C0E7004628AA /* AppDelegate.swift in Sources */,
@@ -420,6 +424,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = NYArticles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -439,6 +444,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = NYArticles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

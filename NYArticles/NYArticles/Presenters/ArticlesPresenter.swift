@@ -66,6 +66,12 @@ class ArticlesPresenter {
     private func getArticles(type: ArticlesBarItem){
         DispatchQueue.global().async {
             self.service.getArticles(type: type, onComplete: { newArticles, error in
+                if let unwrappedError = error {
+                    DispatchQueue.main.async {
+                        showAlert(message: "Something went wrong🥺", viewController: self.articlesViewController, actionHandler: {})
+                    }
+                    return
+                }
                 if let unwrappedArticles = newArticles {
                     self.articles = unwrappedArticles
                     self.setArticlesForTable()
